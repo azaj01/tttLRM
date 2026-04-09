@@ -100,7 +100,7 @@
             <div class="columns is-centered" style="margin-bottom: 0em">
               <div class="column is-max-desktop has-text-centered" style="padding: 0.5em">
                 <h1 class="title is-4 publication-title" style="margin-bottom:0rem">
-                  <strong>CVPR, 2026</strong>
+                  <strong>CVPR 2026 <span style="color: red; font-weight: bold;">(Highlight)</span></strong>
                 </h1>
               </div>
             </div>
@@ -109,22 +109,24 @@
               <div class="publication-links">
                 <div class="btn-group btn-group-sm main-btn-group">
                   <a target="_blank" rel="noopener noreferrer" href="https://arxiv.org/pdf/2602.20160"><span
-                      class="button is-normal" onclick="">
-                      <span class="icon"><i class="fas fa-file-pdf"></i></span>&nbsp&nbsp
+                      class="button is-normal">
+                      <span class="icon"><i class="fas fa-file-pdf"></i></span>&nbsp;&nbsp;
                       PDF
                     </span></a>
+                  <span class="btn-separator">|</span>
                   <a target="_blank" rel="noopener noreferrer" href="https://arxiv.org/abs/2602.20160"><span
-                      class="button is-normal" onclick="">
-                      <span class="icon"><i class="ai ai-arxiv"></i></span>&nbsp&nbsp
+                      class="button is-normal">
+                      <span class="icon"><i class="ai ai-arxiv"></i></span>&nbsp;&nbsp;
                       arXiv
                     </span></a>
-                  <a href="https://github.com/cwchenwang/tttLRM" target="_blank"><span class="button is-normal"
-                      onclick="">
-                      <span class="icon"><i class="fab fa-github"></i></span>&nbsp&nbsp
+                  <span class="btn-separator">|</span>
+                  <a href="https://github.com/cwchenwang/tttLRM" target="_blank"><span class="button is-normal">
+                      <span class="icon"><i class="fab fa-github"></i></span>&nbsp;&nbsp;
                       Code
                     </span></a>
-                  <a href=" #BibTeX"><span class="button is-normal" onclick="">
-                      <span class="icon"><i class="fas fa-quote-right"></i></span>&nbsp&nbsp
+                  <span class="btn-separator">|</span>
+                  <a href="#BibTeX"><span class="button is-normal">
+                      <span class="icon"><i class="fas fa-quote-right"></i></span>&nbsp;&nbsp;
                       BibTeX
                     </span></a>
                 </div>
@@ -136,8 +138,84 @@
     </div>
   </section>
 
+  <!-- Sidebar Table of Contents -->
+  <nav id="toc-sidebar">
+    <h4 style="margin: 0 0 0.5rem 0; font-size: 1.1rem; font-weight: 700; color: #333;">Content</h4>
+    <ul>
+      <li><a href="#abstract" class="toc-link">Abstract</a></li>
+      <li><a href="#pipeline" class="toc-link">Pipeline</a></li>
+      <li><a href="#feedforward" class="toc-link">FeedForward GS Reconstruction</a></li>
+      <li><a href="#online" class="toc-link">Online GS Reconstruction</a></li>
+      <li><a href="#comparisons" class="toc-link">Comparisons</a></li>
+      <li><a href="#single-image" class="toc-link">Single Image-to-3D at 1024 Res</a></li>
+      <li><a href="#BibTeX" class="toc-link">BibTeX</a></li>
+    </ul>
+  </nav>
+  <style>
+    #toc-sidebar {
+      position: fixed;
+      top: 50%;
+      left: 120px;
+      transform: translateY(-50%);
+      max-width: 200px;
+      background: transparent;
+      border: none;
+      padding: 1rem;
+      z-index: 1000;
+    }
+    #toc-sidebar ul {
+      list-style: none;
+      margin: 0;
+      padding: 0;
+    }
+    #toc-sidebar li {
+      margin-bottom: 0.4rem;
+    }
+    #toc-sidebar .toc-link {
+      text-decoration: none;
+      color: #555;
+      font-size: 0.95rem;
+      line-height: 1.4;
+      display: block;
+      padding: 2px 0;
+      transition: color 0.2s;
+    }
+    #toc-sidebar .toc-link:hover,
+    #toc-sidebar .toc-link.active {
+      color: #3273dc;
+      font-weight: 600;
+    }
+    @media (max-width: 1400px) {
+      #toc-sidebar {
+        display: none;
+      }
+    }
+  </style>
+  <script>
+    document.addEventListener('DOMContentLoaded', function() {
+      var tocLinks = document.querySelectorAll('.toc-link');
+      var sections = [];
+      tocLinks.forEach(function(link) {
+        var id = link.getAttribute('href').substring(1);
+        var el = document.getElementById(id);
+        if (el) sections.push({ id: id, el: el, link: link });
+      });
+      window.addEventListener('scroll', function() {
+        var scrollPos = window.scrollY + 120;
+        var current = sections[0];
+        for (var i = 0; i < sections.length; i++) {
+          if (sections[i].el.offsetTop <= scrollPos) {
+            current = sections[i];
+          }
+        }
+        tocLinks.forEach(function(l) { l.classList.remove('active'); });
+        if (current) current.link.classList.add('active');
+      });
+    });
+  </script>
+
   <!-- Paper abstract -->
-  <section class="section hero" style="padding-top: 0.5rem; padding-bottom: 0.5rem;">
+  <section class="section hero" id="abstract" style="padding-top: 0.5rem; padding-bottom: 0.5rem;">
     <div class="container is-max-desktop">
       <div class="columns is-centered has-text-centered">
         <div class="column is-four-fifths">
@@ -163,7 +241,7 @@
   <!-- End paper abstract -->
 
 
-  <section class="hero teaser" style="padding-top: 2em;">
+  <section class="hero teaser" id="pipeline" style="padding-top: 2em;">
     <div class="container is-max-desktop">
       <div class="columns is-centered has-text-centered">
         <div class="column">
@@ -183,7 +261,7 @@
       </div>
   </section>
 
-  <section class="section hero" style="padding-bottom: 0.5rem;">
+  <section class="section hero" id="feedforward" style="padding-bottom: 0.5rem;">
     <div class="container is-max-desktop">
       <div class="columns is-centered has-text-centered">
         <div class="column">
@@ -238,11 +316,11 @@
   </section>
 
 
-  <section class="section hero" style="padding-bottom: 0.5rem;">
+  <section class="section hero" id="online" style="padding-bottom: 0.5rem;">
     <div class="container is-max-desktop">
       <div class="columns is-centered has-text-centered">
         <div class="column">
-          <h2 class="title is-3">Autoregressive GS Reconstruction</h2>
+          <h2 class="title is-3">Online GS Reconstruction</h2>
           <video class="video" id="autoregressive_gs_video" loop playsinline autoPlay muted src="./static/videos/ar.mp4"
             data-method-index="0" onplay="resizeAndPlay(this)">
           </video>
@@ -252,7 +330,7 @@
   </section>
 
   <!-- Comparisons Section -->
-  <section class="section hero" style="padding-top: 2em;">
+  <section class="section hero" id="comparisons" style="padding-top: 2em;">
     <div class="container is-max-desktop">
       <div class="columns is-centered has-text-centered">
         <div class="column">
@@ -342,15 +420,15 @@
 
 
 
-  <section class="section hero" style="padding-top: 2em;">
+  <section class="section hero" id="single-image" style="padding-top: 2em;">
     <div class="container is-max-desktop">
       <div class="columns is-centered has-text-centered">
         <div class="column">
           <h2 class="title is-3">Single Image-to-3D at 1024 Res</h2>
-          <div class="columns is-centered">
+          <div class="columns is-centered is-gapless">
             <div class="column has-text-centered">
-              <img src="static/images/dog.jpg" style="width: 100%;">
-              <video poster="" autoplay muted loop playsinline height="100%">
+              <img src="static/images/dog.jpg" style="width: 100%; display: block;">
+              <video poster="" autoplay muted loop playsinline height="100%" style="display: block;">
                 <source src="static/videos/turntable_dog.mp4" type="video/mp4">
               </video>
               <br>
@@ -358,8 +436,8 @@
                 viewer</a>
             </div>
             <div class="column has-text-centered">
-              <img src="static/images/chair.jpg" style="width: 100%;">
-              <video poster="" autoplay muted loop playsinline height="100%">
+              <img src="static/images/chair.jpg" style="width: 100%; display: block;">
+              <video poster="" autoplay muted loop playsinline height="100%" style="display: block;">
                 <source src="static/videos/turntable_chair.mp4" type="video/mp4">
               </video>
               <br>
@@ -367,8 +445,8 @@
                 viewer</a>
             </div>
             <div class="column has-text-centered">
-              <img src="static/images/monalisa.jpg" style="width: 100%;">
-              <video poster="" autoplay muted loop playsinline height="100%">
+              <img src="static/images/monalisa.jpg" style="width: 100%; display: block;">
+              <video poster="" autoplay muted loop playsinline height="100%" style="display: block;">
                 <source src="static/videos/turntable_monalisa.mp4" type="video/mp4">
               </video>
               <br>
@@ -386,7 +464,7 @@
   <section class="section" id="BibTeX" style="padding-bottom: 10px">
     <div class="container is-max-desktop content has-text-justified">
       <h2 class="title is-3 has-text-centered">BibTeX</h2>
-      <pre><code>
+      <pre style="white-space: pre-wrap; word-wrap: break-word; overflow-x: hidden;"><code>
 @article{wang2026tttlrm,
   Author = {Chen Wang and Hao Tan and Wang Yifan and Zhiqin Chen and Yuheng Liu and Kalyan Sunkavalli and Sai Bi and Lingjie Liu and Yiwei Hu},
   Title = {tttLRM: Test-Time Training for Long Context and Autoregressive 3D Reconstruction},
@@ -405,7 +483,8 @@
     </div>
   </section>
 
-  <footer class="footer">
+  <footer class="footer" style="background-color: rgb(253, 250, 244);">
+    <hr style="border: none; border-top: 1px solid #ddd; margin: 0 0 1.5rem 0; width: 100%;">
     <div class="container">
       <div class="columns is-centered">
         <div class="column is-8">
